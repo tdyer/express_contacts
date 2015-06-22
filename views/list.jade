@@ -1,0 +1,43 @@
+extend layout
+
+block content
+  h1 Your contacts
+  p Here is a list of your contacts
+  p
+    a#delete.btn.btn-default(href='#') Delete | 
+    a#add.btn.btn-default(href="/contacts/add") Add New
+  table
+    thead
+      tr
+        th
+        th Name
+        th Nickname
+    tbody
+      tr
+        td
+          input(type="checkbox", id="1")
+        td
+          a(href="/contacts/1") Joe Smith
+          | Plumber
+        td Joe
+        td
+          a(href="mailto:joe@exmaple.com") joe@example.com
+      tr
+        td
+          input(type="checkbox", id="2")
+        td
+          a(href="/contacts/2") Carla Ricci
+          | Producer
+        td Carla
+        td
+          a(href="mailto:carla@example.com") carla@example.com
+      tr
+        td
+          input(type="checkbox", id="3")
+        td
+          a(href="/contacts/3") Foo Bar
+          | Bar Maid
+        td Foo
+        td
+          a(href="mailto:foo@example.com") foo@example.com
+

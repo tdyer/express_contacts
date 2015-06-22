@@ -3,7 +3,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send('It worked, contacts that is!');
+  res.render('list', {});
+});
+
+router.get('/add', function(req,res){
+  res.render('add', {});
 });
 
 router.post('/', function(req, res, next){
@@ -16,7 +20,7 @@ router.route('/:contact_id')
     next();
   })
   .get(function(req, res){
-    res.send('Hello for contact ' + contact_id);
+    res.render('edit', {});
   })
   .post(function(req, res, next){
     res.send('Post for contact ' + contact_id);
