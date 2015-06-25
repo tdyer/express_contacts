@@ -55,17 +55,19 @@ router.route('/:contact_id')
   })
 // POST /contacts/:contact_id
   .post(function(req, res) {
-    if(!contact.notes) {
-      contact.notes = [];
-    }
-
+    // Update notes
     contact.notes.push({
       created: Date(),
       note: req.body.notes
     });
 
-    res.send('Created new note for contact id '+contact_id);
-    // res.redirect('/contact/'+contact_id);
+    contact.save(function(err, contact){
+      if(err){
+        res.status(400).send("Error saving contact notes: " + err);
+      }else{
+        res.redirect('/contacts/' + contact.id);
+      }
+    });
   })
 // PUT /contacts/:contact_id
   .put(function(req, res) {
