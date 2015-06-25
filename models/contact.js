@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var contactSchema = Schema.new({
+var contactSchema = new Schema({
   name: String,
   job: String,
   nickname: String,
