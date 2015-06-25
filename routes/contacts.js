@@ -2,68 +2,33 @@ var express = require('express');
 var router = express.Router();
 var _ = require('underscore');
 var util = require('util');
-
-
-var contacts = [
-  {
-    id: 1,
-    name: 'Joe Smith',
-    job: 'Plumber',
-    nickname: 'Joe',
-    email: 'joe@gmail.com'
-  },
-  {
-    id: 2,
-    name: 'Carla Ricci',
-    job: 'Principal Division Producer',
-    nickname: 'Carla',
-    email: 'cricci@gmail.com'
-  },
-  {
-    id: 3,
-    name: 'Dragan Burns',
-    job: 'Senior Factors Producer',
-    nickname: 'Drago',
-    email: 'itburns@outlook.com'
-  }
-]
-
-function lookupContact(contact_id) {
-  return _.find(contacts, function(c) {
-    return c.id == parseInt(contact_id);
-  });
-}
-
-function findMaxId() {
-  var maxContact = _.max(contacts, function(contact) {
-    return contact.id;
-  });
-  return maxContact.id;
-}
+var Contact = require('../models/contact');
 
 // GET /contacts
 // Read ALL contacts
 router.get('/', function(req, res) {
-  res.render('list', {contacts: contacts});
+  Contact.find(function(err, contacts, count){
+    res.render('list', {contacts: contacts});
+  });
 });
-
 
 // POST /contacts
 // Create a contact
 router.post('/', function(req, res) {
-  var new_contact_id = findMaxId() + 1;
-  var new_contact = {
-    id: new_contact_id,
+  var new_contact = new Contact({
     name: req.body.fullname,
     job: req.body.job,
     nickname: req.body.nickname,
     email: req.body.email
-  }
+  }).save(function(err, contact, count){
+    if(err){
+      res.status(400).send("Error saving new contact: " + err);
+    }else{
+      // res.send("New Contact Created");
+      res.redirect('/contacts');
+    }
+  });
 
-  contacts.push(new_contact);
-
-  res.send('New contact created with id: ' + new_contact.id);
-  // res.redirect('/contacts/');
 });
 
 // GET /add
