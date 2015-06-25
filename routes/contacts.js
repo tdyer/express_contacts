@@ -6,6 +6,14 @@ var moment = require('moment');
 
 var Contact = require('../models/contact');
 
+// ALL contact routes require a user in the request object.
+router.use(function(req, res, next){
+  if(!req.user){
+    res.redirect('/auth/');
+  }
+  next();
+});
+
 // GET /contacts
 // Read ALL contacts
 router.get('/', function(req, res) {
