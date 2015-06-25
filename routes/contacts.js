@@ -43,9 +43,11 @@ router.get('/add', function(req, res) {
 router.route('/:contact_id')
   .all(function(req, res, next) {
     contact_id = req.params.contact_id;
-    contact = lookupContact(contact_id);
-
-    next();
+    contact = {};
+    contact = Contact.findById(contact_id, function(err, c){
+      contact = c;
+      next();
+    });
   })
 // GET /contacts/:contact_id
   .get(function(req, res) {
@@ -67,13 +69,20 @@ router.route('/:contact_id')
   })
 // PUT /contacts/:contact_id
   .put(function(req, res) {
+    //Update a contact
     contact.name = req.body.fullname;
     contact.job = req.body.job;
     contact.nickname = req.body.nickname;
     contact.email = req.body.email;
 
-    res.send('Update succeeded for contact id: '+contact_id);
-    // res.render('/contacts/');
+    contact.save(function(err, contact, count){
+      if(err){
+        res.status(400).send("Error saving contact: " + err);
+      }else{
+        res.redirect('/contacts');
+      }
+    });
+
   })
 // DELETE /contacts/:contact_id
   .delete(function(req, res) {
