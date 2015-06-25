@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var _ = require('underscore');
 var util = require('util');
+var moment = require('moment');
+
 var Contact = require('../models/contact');
 
 // GET /contacts
@@ -51,7 +53,7 @@ router.route('/:contact_id')
   })
 // GET /contacts/:contact_id
   .get(function(req, res) {
-    res.render('edit', {contact: contact});
+    res.render('edit', {contact: contact, moment: moment});
   })
 // POST /contacts/:contact_id
   .post(function(req, res) {

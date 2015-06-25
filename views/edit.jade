@@ -13,7 +13,7 @@ block content
         dl
           if contact.notes
             each note in contact.notes
-              dt= note.created
+              dt(title=moment(note.postedDate).format("YYYY-MM-DD HH:mm"))= moment(note.postedDate).fromNow()
               dd= note.note
 
         .form-group
