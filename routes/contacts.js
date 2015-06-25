@@ -90,7 +90,13 @@ router.route('/:contact_id')
   })
 // DELETE /contacts/:contact_id
   .delete(function(req, res) {
-    res.send('Delete for contact '+contact_id);
+    contact.remove(function(err, contact){
+      if(err){
+        console.log("Failed to remove contact with id = " + contact.id);
+      }else{
+        res.redirect(303, '/contacts/');
+      }
+    });
   });
 
 module.exports = router;
