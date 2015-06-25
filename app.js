@@ -5,9 +5,24 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var contacts = require('./routes/contacts');
+
+// setup the DB for the environment.
+var MongoURI = process.env.MONGOURI || 'mongodb://localhost/testdb';
+// setup DB connection.
+// BEWARE: could have application code running before the connection is
+// actually made.
+mongoose.connect(MongoURI, function(err, res){
+  if(err) {
+    console.log("Error connecting to " + MongoURI + '.' + err);
+  }else {
+    console.log("Connecting to " + MongoURI);
+  }
+
+});
 
 var app = express();
 
