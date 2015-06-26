@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
+// My Routes
 var routes = require('./routes/index');
 var contacts = require('./routes/contacts');
 var auth = require('./routes/auth');
@@ -48,10 +49,17 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// See http://toon.io/understanding-passportjs-authentication-flow/
 app.use(passport.initialize());
+// Load the user object onto req.user if a serialised user object
+// was found in the server
 app.use(passport.session());
 
 var Account = require('./models/account');
+
+// The createStrategy method is added to the Account model by the
+// passport-local-mongoose plugin.
+// See https://github.com/saintedlama/passport-local-mongoose
 passport.use(Account.createStrategy());
 
 // stores user login state in the DB.
