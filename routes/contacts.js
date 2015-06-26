@@ -11,6 +11,7 @@ router.use(function(req, res, next){
   if(!req.user){
     res.redirect('/auth/');
   }
+  res.locals.user = req.user;
   next();
 });
 
@@ -61,7 +62,7 @@ router.route('/:contact_id')
   })
 // GET /contacts/:contact_id
   .get(function(req, res) {
-    res.render('edit', {contact: contact, moment: moment});
+    res.render('edit', {contact: contact, moment: moment });
   })
 // POST /contacts/:contact_id
   .post(function(req, res) {

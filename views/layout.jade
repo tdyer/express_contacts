@@ -6,6 +6,9 @@ html
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap-theme.css')
   body
+    include nav_login.jade
+    +login_status(user)
+
     block content
 
     script(type='text/javascript' src='javascripts/jquery-min.js')

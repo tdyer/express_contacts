@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  // Guessing that the user is saved in the session
+  // Yes, the user is automatically saved in the session by the SessionStrategy
   res.render('index', { title: 'Express', user: req.user });
 });
 
